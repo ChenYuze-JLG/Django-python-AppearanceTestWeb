@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--suppress CssUnknownTarget -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎进入颜值测试界面</title>
+    {% load static %}
+    <script type="text/javascript" src="{% static  'js/jquery-3.2.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body{
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-repeat: repeat;
+        }
+    </style>
+
+</head>
+<body>
+{% include 'topmes.html' %}
+<div class="page-header">
+    <h1 align="center" style="color: black">欢迎进入颜值测试界面</h1>
+</div>
+<div class="container text-center">
+    <div>
+        <div>
+            <video width="640" height="480" id="video" class="img-thumbnail" style="background-color: black" autoplay
+                   playsinline></video>
+        </div>
+        <div>
+            <button id="capture" class="btn btn-lg btn-block btn-primary">开始捕获</button>
+        </div>
+    </div>
+</div>
+<div class="row clearfix">
+    <div>
+        <canvas hidden width="640" height="480" id="canvas"></canvas>
+    </div>
+    <div class="col-md-6 column">
+        <img width="640" height="480" src="//:0" id="img"
+             onerror="this.src='{% static 'images/隔屏丑.jpg' %}'">
+    </div>
+    <div class="col-md-6 column">
+        <table class="table" style="color: black">
+            <thead>
+            <tr>
+                <th>年龄</th>
+                <th>表情</th>
+                <th>性别</th>
+                <th>颜值</th>
+                <th>戴/不戴眼镜可能性</th>
+                <th>眼镜种类</th>
+            </tr>
+            </thead>
+
+            <tbody class="x-cate" id="test">
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row clearfix">
+    <div class="col-md-6 column">
+        <button class="btn btn-lg btn-block btn-primary" onclick="getAudio()">生成音频</button>
+    </div>
+    <div class="col-md-6 column">
+        <button class="btn btn-lg btn-block btn-primary" onclick="control()">播放/暂停</button>
+    </div>
+</div>
+<footer style="background-color: snow; color: black"><p>@2020 天码行空</p>
+    <p>Posted by: 天码行空小组</p></footer>
+{% load static %}
+<script type="text/javascript" src="{% static 'js/camera.js' %}"></script>
+
+<script type="text/javascript">
+        var audio;
+        var flag = true;
+        function getAudio(){
+            audio = new Audio("../../static/audio/audio.mp3");
+            audio.load();
+        }
+        function control(){
+            if(flag) { audio.play(); flag = false; }
+            else { audio.pause(); flag = true; }
+        }
+    
+
+</script>
+</body>
+</html>
