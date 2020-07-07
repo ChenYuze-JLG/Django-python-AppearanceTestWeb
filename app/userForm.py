@@ -1,5 +1,5 @@
 from django import forms
-from captcha.fields import CaptchaField				# 导入验证码的Field
+from captcha.fields import CaptchaField  # 导入验证码的Field
 
 
 class UserForm(forms.Form):
