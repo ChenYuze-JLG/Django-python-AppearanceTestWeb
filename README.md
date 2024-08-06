@@ -9,8 +9,10 @@ conda activate faceweb
 ```
 
 ### If no database, using the following commands:
+```
 python manage.py makemigrations
 python manage.py migrate
+```
 
 ## 2. Run This Project
 ```
