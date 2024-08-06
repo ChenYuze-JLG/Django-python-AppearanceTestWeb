@@ -2,10 +2,14 @@
 var constraints = { video: { facingMode: "user" }, audio: false };
 
 // 定义变量（video、img、canvas、capture）
-const cameraView = document.querySelector("#video"),
+const cameraView = document.querySelector("#video"), // showvedio
       cameraOutput = document.querySelector("#img"),
       cameraSensor = document.querySelector("#canvas"),
-      cameraTrigger = document.querySelector("#capture")
+      cameraTrigger = document.querySelector("#capture"),   // 开始捕获
+      cameraAudio = document.querySelector("#audioBtn");
+
+var audio;
+var controlFlag = true;
 
 // 打开摄像头、获取视频流
 function cameraStart() {
@@ -22,6 +26,7 @@ function cameraStart() {
 
 // 拍照次数
 var count = 0;
+var dataURL = "";
 
 // 拍照函数
 function triggerStart(){
@@ -29,11 +34,12 @@ function triggerStart(){
     // cameraSensor.width = cameraView.videoWidth;
     // cameraSensor.height = cameraView.videoHeight;
 
+    // alert(cameraView.videoWidth);
     // 设置截图结果大小与视频当前大小相同，获取图片
     cameraSensor.getContext("2d").drawImage(cameraView, 0, 0, cameraView.width, cameraView.height);
 
     // 获取dataURL，质量为1
-    dataURL = cameraSensor.toDataURL("image/webp", 1);
+    dataURL = cameraSensor.toDataURL("image/jpeg", 1);
     // 将image文件地址设置为dataURL，由于初始无图片地址，改用默认图片
     // cameraOutput.src = dataURL;
 
@@ -41,7 +47,6 @@ function triggerStart(){
     cameraOutput.width = cameraView.width;
     cameraOutput.height = cameraView.height;
     count = count + 1;
-
     // 发送ajax请求，将dataURL信息和拍照次数count发送到后台
     $.ajax({
         async: true, // 这是开启异步请求, (默认值)
@@ -52,6 +57,8 @@ function triggerStart(){
         headers: {"X-CSRFToken":$.cookie("csrftoken")}, // 获取scrf_token
         success: function(data){
             if(data['state'] == "OK" && count == 5){
+                data['state'] = "NO";
+                count += 1;
                 cameraOutput.src = data['ResponseDataURL'];
                 alert("识别成功!");
                 var age=data['age'];
@@ -66,10 +73,12 @@ function triggerStart(){
                     +"<td>"+beauty+"</td>"
                     +"<td>"+glaPoss+"</td>"
                     +"<td>"+glaType+"</td>"
-                    +"</tr>"
+                    +"</tr>";
                 test.innerHTML=str1;
-                ;
-
+                var path = "../../static/audio/" + data["username"] + ".mp3";
+                console.log(path);
+                audio = new Audio(path);
+                audio.load();
             }
             else if(data['state'] == "NO" && count == 5){
                 alert("识别失败");
@@ -95,3 +104,59 @@ cameraTrigger.onclick = function(){
 
 // 加载窗口时即获取视频流
 window.addEventListener("load", cameraStart, false);
+
+function control(){
+    if(controlFlag) { audio.play(); controlFlag = false; }
+    else { audio.pause(); controlFlag = true; }
+}
+
+cameraAudio.onclick = function(){
+    control();
+}
+
+function showImg(input){
+    var file = input.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e){
+        cameraOutput.src = e.target.result;
+        dataURL = e.target.result;
+        $.ajax({
+            async: true, // 这是开启异步请求, (默认值)
+            url: "/app/video/ajax/", // 这是请求地址
+            type: "post", // 提交数据的范式时post
+            traditional: true,
+            data: {'dataURL': dataURL, 'count': 1},
+            headers: {"X-CSRFToken":$.cookie("csrftoken")}, // 获取scrf_token
+            success: function(data){
+                if(data['state'] == "OK"){
+                    alert("识别成功!");
+                    var age=data['age'];
+                    var emoji=data['emoji'];
+                    var gender=data['gender'];
+                    var beauty=data['beauty'];
+                    var glaPoss=data['glaPoss'];
+                    var glaType=data['glaType'];
+                    var str1="<tr>"+"<td>"+age+"</td>"
+                        +"<td>"+emoji+"</td>"
+                        +"<td>"+gender+"</td>"
+                        +"<td>"+beauty+"</td>"
+                        +"<td>"+glaPoss+"</td>"
+                        +"<td>"+glaType+"</td>"
+                        +"</tr>";
+                    test.innerHTML=str1;
+                    var path = "../../static/audio/" + data["username"] + ".mp3";
+                    console.log(path);
+                    audio = new Audio(path);
+                    audio.load();
+                }
+                else if(data['state'] == "NO"){
+                    alert("识别失败");
+                }
+            },
+            error: function(data){
+                alert("提交失败");
+            }
+        });
+    }
+    reader.readAsDataURL(file);
+}

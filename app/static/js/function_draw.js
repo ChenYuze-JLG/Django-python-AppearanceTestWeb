@@ -1,25 +1,23 @@
 var show_curve_button = document.querySelector("#show_curve");
 
+var nums = new Array();
+var datas = new Array();
 //声明全局颜值变量
-var nums = [];   // 颜值
-var datas = [];  // 日期
-var flag = 0;
+
+show_curve_button.onclick = function(){
+    getData();
+}
+
 function getData(){
-    // 这里是用于测试
-    nums = [77, 65, 34, 56, 98];
-    datas = ["11.1-11.2", "11.3-11.9", "11.10-11.16",
-            "11.17-11.23", "11.24-11.30"];
-    flag = 0;
     $.ajax({
-        async: false, // 这是开启异步请求, (默认值)
+        async: true, // 这是开启异步请求, (默认值)
         url: "/app/history/ajax/", // 这是请求地址
         type: "post", // 提交数据的范式时post
         traditional: true,
-        data: {"flag": flag},
+        data: {"flag": 0},
         headers: {"X-CSRFToken":$.cookie("csrftoken")}, // 获取scrf_token
         success: function(data){
             if(data['state'] == "OK" ){
-//                alert("数据获取成功!");
                 nums = data['beauty'];
                 datas = data['dateTime'];
                 for(var i=0; i<datas.length; i++){
@@ -27,22 +25,26 @@ function getData(){
                     var s2 = datas[i].slice(11, 19);
                     datas[i] = s1 + "\n" + s2 + "\n";
                 }
-                flag = 1;
+                draw();
             }
             else if(data['state'] == "NO" ){
-//                alert("数据获取失败");
+                alert("数据获取失败");
             }
         },
         error: function(data){
-//            alert("数据获取失败");
+            alert("数据获取失败");
         }
     });
 }
-getData();
-show_curve_button.onclick = function(){
+
+function draw(){
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('can1'));
-
+    var l = 0;
+    var r = 100;
+    if(datas.length > 10){
+        r = 1000 / datas.length;
+    }
     // 指定图表的配置项和数据
     var option = {
         title: {
@@ -59,8 +61,8 @@ show_curve_button.onclick = function(){
         dataZoom: [
             {
                 type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
-                start: 10,      // 左边在 10% 的位置。
-                end: 40         // 右边在 40% 的位置。
+                start: l,      // 左边在 l 的位置。
+                end: r         // 右边在 r 的位置。
             }
         ],
         series: [{
@@ -88,10 +90,8 @@ show_curve_button.onclick = function(){
             extraCssText: 'width: 170px'
         },
     };
-
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
 }
-
 
 

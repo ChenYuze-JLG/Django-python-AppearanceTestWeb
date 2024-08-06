@@ -1,14 +1,22 @@
 # encoding:utf-8
+import os
 import requests
+import json
+import base64
+import urllib
 
 
+# 人脸识别封装模块
 class FaceRecognition:
     def __init__(self, base64):
         # print(type(base64))
+        # base64格式图片数据
+        # self.base64 = self.get_file_content_as_base64(base64)
         self.base64 = base64
         self.result_json = ""
         self.face_list = ""
 
+    # 向百度API发送测试、获取数据请求
     def get_result(self):
         request_url = "https://aip.baidubce.com/rest/2.0/face/v3/detect"
         params = "{\"image\":\"%s\"," \
@@ -17,7 +25,7 @@ class FaceRecognition:
                  "ace,quality,eye_status,emotion,face_type,mask,spoofing\"," \
                  "\"faceshape\":\" \"," \
                  "\"facetype\":\" \"}" % self.base64
-        access_token = '24.557b32893a4b59e13ba2941f34153d65.2592000.1596095760.282335-20665916'
+        access_token = '24.9e3041a2f74ce73098373992107aca05.2592000.1725531765.282335-103762223'
         request_url = request_url + "?access_token=" + access_token
         headers = {'content-type': 'application/json'}
         response = requests.post(request_url, data=params, headers=headers)
@@ -53,8 +61,24 @@ class FaceRecognition:
         return self.face_list[0]['beauty']
 
 
+# 本地测试
+def get_file_content_as_base64(path, urlencoded=False):
+    """
+    获取文件base64编码
+    :param path: 文件路径
+    :param urlencoded: 是否对结果进行urlencoded 
+    :return: base64编码信息
+    """
+    with open(path, "rb") as f:
+        content = base64.b64encode(f.read()).decode("utf8")
+        if urlencoded:
+            content = urllib.parse.quote_plus(content)
+    return content
+
+
 if __name__ == "__main__":
-    fr = FaceRecognition("E:\\py\\black.jpg")
+    imgbase64 = get_file_content_as_base64("./app/static/images/black.jpg")
+    fr = FaceRecognition(imgbase64)
     fr.run()
     print(fr.get_age())
     print(fr.get_emoji())

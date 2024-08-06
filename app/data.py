@@ -1,6 +1,8 @@
+# 数据暂存区
 UserFaceResArray = []
 
 
+# 用户暂存区内存储对象
 class UserFaceRes:
     def __init__(self):
         # 存储用户名，用于标识

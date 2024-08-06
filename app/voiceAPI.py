@@ -5,11 +5,15 @@ from urllib.parse import urlencode, quote
 
 
 class TextToVoice:
-    def __init__(self, text):
+    def __init__(self, text, username):
         self.text = text
-        self.appID = '20700498'
-        self.ak = 'NQyZBBK0iguamFRkY7x5LmOX'
-        self.sk = 'u6ZvLaT4lMLbzWnKZRXyQY9Fs2IAKj1h'
+        self.username = username
+        # self.appID = '20700498'
+        # self.ak = 'NQyZBBK0iguamFRkY7x5LmOX'
+        # self.sk = 'u6ZvLaT4lMLbzWnKZRXyQY9Fs2IAKj1h'
+        self.appID = '103836653'
+        self.ak = 'boMxUICHxdP5LO4OdpfAiQyw'
+        self.sk = 'lXcJ2ghgZcxQkgwbSWsANoCLADKvgX9C'
         self.TOKEN_URL = 'http://openapi.baidu.com/oauth/2.0/token?'
 
     # 获取token，已获取token，使用时无需调用
@@ -52,7 +56,7 @@ class TextToVoice:
         result = client.synthesis(self.text, 'zh', 1, {'vol': 5, 'per': 0, 'spd': 5, 'pit': 5, })
         # 识别正确返回语音二进制 错误则返回dict 参照下面错误码
         if not isinstance(result, dict):
-            with open('app\\static\\audio\\audio.mp3', 'wb+') as f:
+            with open('app\\static\\audio\\{0}.mp3'.format(self.username), 'wb+') as f:
                 f.write(result)
             print("转换成功")
         else:
@@ -61,10 +65,11 @@ class TextToVoice:
     # 播放所得到的合成语音
     def play(self):
         from playsound import playsound
-        playsound('audio.mp3')
+        # playsound('audio.mp3')
+        playsound('{0}.mp3'.format(self.username))
 
 
 if __name__ == '__main__':
-    vP = TextToVoice('我是一个测试文件')
+    vP = TextToVoice('我是一个测试文件', "test")
     vP.getVoice()
     vP.play()

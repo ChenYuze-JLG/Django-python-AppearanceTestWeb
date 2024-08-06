@@ -1,0 +1,89 @@
+
+.captcha {
+    width: 80px;
+    height: 40px;
+}
+
+.hover-up {
+    top: 0;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+.hover-up:hover {
+    box-shadow: -1px 5px 10px;
+    top: -2px;
+}
+
+.loginBox {
+    border-style: solid;
+    border-radius: 20px; /* 圆角边框  */
+    border-color: #d9d9d9;
+    box-shadow: 3px -1px 10px #b3b3b3; /* 阴影  */
+}
+
+.tab-menu {
+
+}
+
+.tab-menu ul {
+    margin: 10px; /* 外边距  */
+    padding-top: 15px; /* 内边距  */
+    padding-left: 25px;
+}
+
+.tab-menu ul li {
+    font-family: tahoma, arial, 'Hiragino Sans GB', '\5FAE\8F6F\96C5\9ED1', sans-serif;
+    font-size: 20px;
+    padding-right: 80px;
+    border-bottom: 2px solid #d9d9d9;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    padding-bottom: 5px;
+}
+
+.tab-menu ul li.active {
+    border-bottom-color: #7ab5d3;
+}
+
+.tab-con {
+
+}
+
+.tab-con div {
+    display: none;
+    padding: 25px;
+}
+
+.tab-con div input {
+    height: 35px;
+    border-radius: 30px;
+    margin-top: 5px;
+    padding-left: 30px;
+    width: 130px;
+}
+
+.tab-con div:first-child {
+    display: block;
+}
+
+.username {
+    background: #ffffff url("../images/username.png") 10px 14px no-repeat;
+    background-size: 16px 16px;
+    width: 215px;
+}
+
+.password {
+    background: #FFFFFF url("../images/password.png") 10px 14px no-repeat;
+    background-size: 16px 16px;
+}
+
+.btn {
+    background: #0e90d2;
+    border-radius: 30px;
+    height: 50px;
+    width: 250px;
+    margin-top: 10px;
+
+}

@@ -26,8 +26,8 @@
 <div class="container text-center">
     <div>
         <div>
-            <video width="640" height="480" id="video" class="img-thumbnail" style="background-color: black" autoplay
-                   playsinline></video>
+            <video width="615" height="480" id="video" class="img-thumbnail" style="background-color: black" autoplay
+                   playsinline controls></video>
         </div>
         <div>
             <button id="capture" class="btn btn-lg btn-block btn-primary">开始捕获</button>
@@ -36,11 +36,11 @@
 </div>
 <div class="row clearfix">
     <div>
-        <canvas hidden width="640" height="480" id="canvas"></canvas>
+        <canvas hidden width="615" height="480" id="canvas"></canvas>
     </div>
     <div class="col-md-6 column">
-        <img width="640" height="480" src="//:0" id="img"
-             onerror="this.src='{% static 'images/隔屏丑.jpg' %}'">
+        <img width="615" height="480" src="//:0" id="img"
+             onerror="this.src='{% static 'images/black.jpg' %}'">
     </div>
     <div class="col-md-6 column">
         <table class="table" style="color: black">
@@ -60,12 +60,19 @@
         </table>
     </div>
 </div>
+<script>
+    function getFile(){
+        $("#upLoadInput").click();
+    }
+</script>
 <div class="row clearfix">
     <div class="col-md-6 column">
-        <button class="btn btn-lg btn-block btn-primary" onclick="getAudio()">生成音频</button>
+        <input id="upLoadInput" type="file" accept="image/jpg,image/gif,image/png"
+        onchange="showImg(this)"  style="display:none"/>
+        <button class="btn btn-lg btn-block btn-primary" onclick="getFile()">上传文件</button>
     </div>
     <div class="col-md-6 column">
-        <button class="btn btn-lg btn-block btn-primary" onclick="control()">播放/暂停</button>
+        <button id="audioBtn" class="btn btn-lg btn-block btn-primary">播放/暂停</button>
     </div>
 </div>
 <footer style="background-color: snow; color: black"><p>@2020 天码行空</p>
@@ -74,17 +81,7 @@
 <script type="text/javascript" src="{% static 'js/camera.js' %}"></script>
 
 <script type="text/javascript">
-        var audio;
-        var flag = true;
-        function getAudio(){
-            audio = new Audio("../../static/audio/audio.mp3");
-            audio.load();
-        }
-        function control(){
-            if(flag) { audio.play(); flag = false; }
-            else { audio.pause(); flag = true; }
-        }
-    
+
 
 </script>
 </body>

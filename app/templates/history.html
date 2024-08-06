@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>历史记录</title>
+    <title>数据一览</title>
     {% load static %}
     <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +10,71 @@
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.cookie.js' %}"></script>
+    <script type="text/javascript">
+        // 更新的函数
+        function DeleteUserById(id){
+            // 发送更新数据前的查询请求
+            $.ajax({
+        async: false, // 这是开启异步请求, (默认值)
+        url: "DeleteUserById/", // 这是请求地址
+        type: "post", // 提交数据的范式时post
+        traditional: true,
+        data: {"id":id},
+        headers: {"X-CSRFToken":$.cookie("csrftoken")}, // 获取scrf_token
+        success: function(data){
+            if(data['state'] == "OK" ){
+//                alert("数据获取成功!");
+                var ID = data['ID'];
+                var age=data['age'];
+                var emoji=data['emoji'];
+                var gender=data['gender'];
+                var beauty=data['beauty'];
+                var glaPoss=data['glaPoss'];
+                var glaType=data['glaType'];
+                var dateTime = data['dateTime']
+                var str_table = "";
+                for(var i = 0 ; i < age.length ; i++){
+                    var str1="<tr>"
+                        +"<td>"+age[i]+"</td>"
+                        +"<td>"+emoji[i]+"</td>"
+                        +"<td>"+gender[i]+"</td>"
+                        +"<td>"+beauty[i]+"</td>"
+                        +"<td>"+glaPoss[i]+"</td>"
+                        +"<td>"+glaType[i]+"</td>"
+                        +"<td>"+dateTime[i]+"</td>"
+                        ;
+                    // console.log(str_table);
+                    var id = ID[i];
+                    var button_temp = "<td>" + "<button class= 'btn  btn-lg active btn-warning' onclick='DeleteUserById("+id+")'>删除</button>" +"</td>";
+                     str_table = str_table + str1 + button_temp +"</tr>";
+                }
+                test.innerHTML= str_table;
+            }
+            else if(data['state'] == "NO" ){
+//                alert("数据获取失败");
+            }
+        },
+        error: function(data){
+//                alert("数据获取失败");
+        }
+      });
+    }
+      </script>
+    <style type="text/css">
+        body{
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-repeat: repeat;
+        }
+    </style>
 </head>
 
 <body>
 {% include 'topmes.html' %}
-<h2 class="text-info">历史记录</h2>
+<h2 class="text-info">数据一览</h2>
 <br>
 
 <ul id="myTab" class="nav nav-tabs">
-    <li class="active">
+    <li>
         <a href="#curve" data-toggle="tab">
             <button id='show_curve' class="btn  btn-lg active btn-danger">查看颜值曲线</button>
         </a>
@@ -30,14 +86,21 @@
         </a>
     </li>
 
+    <li>
+        <a href="#rank" data-toggle="tab">
+            <button id="show_rank" type="submit" class="btn btn-lg active btn-info" name="show_rank">查看排行榜</button>
+        </a>
+    </li>
+
 </ul>
 <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade in active" id="curve">
+
+    <div class="tab-pane fade" id="curve">
         <div id="can1" style="width:800px;height:500px;"></div>
-        <script type="text/javascript" src="{% static 'js/function_draw.js' %}"></script>
     </div>
+
     <div class="tab-pane fade" id="table">
-        <div class="col-md-6 column" id="table_head">
+        <div class="col-md-8 column" id="table_head">
             <table class="table" style="color: black">
                 <thead>
                 <tr>
@@ -48,14 +111,37 @@
                     <th>戴/不戴眼镜可能性</th>
                     <th>眼镜种类</th>
                     <th>日期时间</th>
+                    <th>功能</th>
                 </tr>
                 </thead>
                 <tbody class="x-cate" id="test">
                 </tbody>
             </table>
         </div>
-        <script type="text/javascript" src="{% static 'js/function_table.js' %}"></script>
     </div>
+
+
+    <div class="tab-pane fade" id="rank">
+        <div class="col-md-6 column" id="rank_head">
+            <table class="table" style="color: black">
+                <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>用户名</th>
+                    <th>颜值</th>
+                </tr>
+                </thead>
+                <tbody class="x-cate" id="rank_table">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
+
+<script type="text/javascript" src="{% static 'js/function_table.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/function_draw.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/function_rank.js' %}"></script>
+
 </body>
 </html>

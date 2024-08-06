@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     {% load static %}
-    <script type="text/javascript" src="{% static  'js/jquery-3.2.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="{% static  'js/jquery-3.2.1.min.js' %}"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
 
 
 </head>
@@ -15,21 +15,35 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid" style="background-color:black; color:white">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">导航栏</a>
+            <a class="navbar-brand" href="/app/index/">导航栏</a>
         </div>
         <ul class="nav navbar-nav navbar-left">
             <li><a href="/app/index/">主页</a></li>
-            <li><a href="/app/history/">历史数据</a></li>
-            <li><a href="#">帮助</a></li>
-            <li><a href="#">联系我们</a></li>
+            <li><a href="/app/history/">数据一览</a></li>
+            <li><a href="/app/help/">帮助</a></li>
+            <li><a href="#" title="请加入官方QQ群联系我们:"
+			 data-toggle="popover" data-placement="bottom">联系我们</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 
-            <li><a href="/app/login/"><span class="glyphicon glyphicon-log-in"></span> 登录/<span
-                    class="glyphicon glyphicon-user"></span> 注册</a></li>
+            <li><a href="/app/index/">{{ username }}</a></li>
+            <li><a href="/app/logout/">安全退出</a></li>
+
         </ul>
     </div>
 </nav>
+
+<script>
+$(function () {
+	$("[data-toggle='popover']").popover({
+        animation:true,
+        html:true,
+        container:"body",
+        content:"<img width=\"250\" height=\"448\"src='{% static 'images/developer.jpg' %}'>",
+    });
+});
+</script>
+
 </body>
 </html>
 

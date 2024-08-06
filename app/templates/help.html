@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎进入帮助页面</title>
+    {% load static %}
+    <script type="text/javascript" src="{% static  'js/jquery-3.2.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body{
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-repeat: repeat;
+        }
+    </style>
+</head>
+<body>
+{% include 'topmes.html' %}
+
+<h1 class="text-center">颜值测试程序使用帮助</h1>
+<div>
+    {% load static %}
+    <br>
+    <br>
+    <p class="text-center">第一步，注册账号(若已拥有账号，则跳至第二步):
+    <br>填写账号，并两次输入密码即可创建账号，并请妥善保护您的账号密码。
+        <br><br>
+        <img class="text-center" width="640" height="315" src="{% static 'images/注册.jpg' %}">
+    </p>
+    <br>
+    <br>
+    <p class="text-center">第二步，登录账号:
+    <br>填写账号，并输入密码即可登录。
+        <br><br><img class="text-center" width="640" height="315" src="{% static 'images/登录.jpg' %}">
+    </p>
+    <br>
+    <br>
+    <p class="text-center">第三步，开始测试:
+    <br>点击"开始捕获"按钮，等待约5s时间，然后点击弹出的确认框，随后即可获得测试数据。
+        <br><br><img class="text-center" width="640" height="315" src="{% static 'images/开始测试.jpg' %}">
+    </p>
+    <br>
+    <br>
+    <p class="text-center">第四步，语音播报(非必要步骤):
+    <br>点击"生成音频"即可将结果数据转成语音，点击右侧的"播放/暂停"按钮即可播放/暂停语音。
+        <br><br><img class="text-center" width="640" height="315" src="{% static 'images/结果.jpg' %}">
+    </p>
+</div>
+
+</body>
+</html>

@@ -17,17 +17,23 @@ from django.contrib import admin
 from django.urls import path
 
 from app import views
-from django.conf.urls import url
+from django.urls import re_path as url
 from django.conf.urls import include
 
 urlpatterns = [
+    path('', views.index),
     path('admin/', admin.site.urls),
     path('app/index/',views.index),
     path('app/login/', views.myLogin),
     path('app/register/', views.addUser),
     url(r'^captcha/', include('captcha.urls')),
-    # path('app/video/', views.processVideo),
     path('app/video/ajax/', views.processAjax),
     path('app/history/', views.history),
     path('app/history/ajax/', views.processHistory),
+    path('app/history/rank/', views.showRank),
+    path('app/register/ajax/<str:username>', views.usernameAjax),
+    path('app/logout/', views.myLogout),
+    path('app/help/', views.help),
+    path('app/history/DeleteUserById/', views.DeleteUserById),
+
 ]

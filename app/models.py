@@ -13,7 +13,7 @@ class UserInfo(models.Model):
     # beauty最多4位，其中两位小数（本处最大99.99）
     beauty = models.DecimalField(max_digits=4, decimal_places=2)
     # 是否戴眼镜置信度：0~1，需与glassType结合
-    glaPoss = models.IntegerField()
+    glaPoss = models.FloatField()
     # 眼镜类型：none:无眼镜，common:普通眼镜，sun:墨镜
     glaType = models.CharField(max_length=32)
     # 日期时间格式：2020-07-06 11:10:36.191424，datetime.datetime.now获取

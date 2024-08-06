@@ -7,135 +7,59 @@
     <meta charset="UTF-8">
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/login.css' %} " rel="stylesheet">
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'js/login.js' %}"></script>
     <title>登录注册</title>
-
-    <script>
-        $(function () {
-            // ajax 刷新验证码
-            $('.captcha').click(function () {
-                console.log('click');
-                $.getJSON("/captcha/refresh", function (result) {
-                    $('.captcha').attr('src', result['image_url']);
-                    $('#id_captcha_0').val(result['key'])
-                });
-            });
-        })
-    </script>
     <style type="text/css">
-
-        .captcha {
-            width: 80px;
-            height: 40px;
-        }
-
-        .hover-up {
-            top: 0;
-            position: relative;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .hover-up:hover {
-            box-shadow: -1px 5px 10px;
-            top: -2px;
-        }
-
-        .loginBox {
-            border-style: solid;
-            border-radius: 20px; /* 圆角边框  */
-            border-color: #d9d9d9;
-            box-shadow: 3px -1px 10px #b3b3b3; /* 阴影  */
-        }
-
-        .tab-menu ul {
-            margin: 10px; /* 外边距  */
-            padding-top: 15px; /* 内边距  */
-            padding-left: 25px;
-        }
-
-        .tab-menu ul li {
-            font-family: tahoma, arial, 'Hiragino Sans GB', '\5FAE\8F6F\96C5\9ED1', sans-serif;
-            font-size: 20px;
-            padding-right: 80px;
-            border-bottom: 2px solid #d9d9d9;
-            display: inline-block;
-            text-align: center;
-            cursor: pointer;
-            padding-bottom: 5px;
-        }
-
-        .tab-menu ul li.active {
-            border-bottom-color: #7ab5d3;
-        }
-
-        .tab-con div {
-            display: none;
-            padding: 25px;
-        }
-
-        .tab-con div input {
-            height: 35px;
-            border-radius: 30px;
-            margin-top: 5px;
-            padding-left: 30px;
-            width: 130px;
-        }
-
-        .tab-con div:first-child {
-            display: block;
-        }
-
-        .username {
-            background: #ffffff url("{% static "images/username.png" %}") 10px 14px no-repeat;
-            background-size: 16px 16px;
-            width: 215px;
-        }
-
-        .password {
-            background: #FFFFFF url(" {% static "images/password.png" %}") 10px 14px no-repeat;
-            background-size: 16px 16px;
-        }
-
-        .btn {
-        {#font-family: ;#} background: #0e90d2;
-            border-radius: 30px;
-            height: 50px;
-            width: 250px;
-            margin-top: 10px;
-
+        body{
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-repeat: repeat;
         }
     </style>
-
 </head>
 
 <body>
-
-{#{% include 'topmes.html' %}#}
-
 
 <div class="navbar navbar-inverse">
     <div class="navbar-inner">
         <div class="container" style="height: 40px; padding-top: 4px">
             <a class="brand" href="#" style="padding-left: 8px;">导航栏</a>
             <div class="nav-collapse navbar-inverse-collapse collapse" style="height: 0px;">
-                <ul class="nav" style= "font-family: serif;">
+                <ul class="nav" style="font-family: serif;">
                     <li class="active"><a href="#" style="color: #9d9d9d">主页</a></li>
-                    <li class="active"><a href="#" style="color: #9d9d9d">历史数据</a></li>
-                    <li class="active"><a href="#" style="color: #9d9d9d">帮助</a></li>
-                    <li class="active"><a href="#" style="color: #9d9d9d">联系我们</a></li>
+                    <li class="active"><a href="#" style="color: #9d9d9d">数据一览</a></li>
+                    <li class="active"><a href="/app/help/" style="color: #9d9d9d">帮助</a></li>
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle"
+                           style="font-family: serif; height: 30px;width: 60px; background-color: black; color: #9d9d9d" ;
+                           data-toggle="dropdown" href="#">
+                            联系我们
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li style="color: black">请加入官方QQ群联系我们:</li>
+                            <li>
+                                <img src="{% static "images/developer.jpg" %}">
+                            </li>
+                        </ul>
+                    </div>
                 </ul>
 
                 <!-- 靠右 -->
                 <ul class="nav pull-right">
-                    <li><a href="/app/login/"><span class="glyphicon glyphicon-log-in"></span> 登录/<span class="glyphicon glyphicon-user"></span> 注册</a></li>
+
+                    <li><a href="/app/login/"><span class="glyphicon glyphicon-log-in"></span> 登录/<span
+                            class="glyphicon glyphicon-user"></span> 注册</a></li>
 
                 </ul>
             </div><!-- /.nav-collapse -->
         </div>
+
     </div><!-- /navbar-inner -->
 </div>
-
 
 
 {# 位置 #}
@@ -158,9 +82,14 @@
             <img src="{% static 'images/2.png' %}">
         </div>
         <div class="item">
-            <img src="{% static 'images/2.png' %}">
+            <img src="{% static 'images/3.png' %}">
         </div>
     </div>
+    <script type="text/javascript">
+        $('.carousel').carousel({
+        interval: 1500  // 轮播时间
+        });
+    </script>
 
 </div>
 
@@ -178,6 +107,8 @@
     <!-- 登录注册页面 --->
     <div class="tab-con">
         <div>
+
+            <!---  登录界面  -->
             <form action="/app/login/" method="post">
 
                 {% csrf_token %}
@@ -196,32 +127,16 @@
                 <br>
                 <input style="width: auto ; padding-top: 5px" class="checkbox" type="checkbox" id="checkBox"
                        name="checkBox">十天免登录
-
-
             </form>
         </div>
         <div>
+
+            <!---  注冊界面  -->
             <form method="post" action="/app/register/">
                 {% csrf_token %}
                 <input class="username" type="text" id="username1" name="username1" placeholder="请输入用户名"
-                       style="width: 215px">
-                <span id="checkUsername"></span>
-                <script type="text/javascript">
-                    // 通过ajax发送发送到后台进行验证用户名的唯一性
-                    $.ajax({
-                        async: true, // 这是开启异步请求, (默认值)
-                        url: "/app/register/", // 这是请求地址
-                        type: "post", // 提交数据的范式时post
-                        headers: {"X-CSRFToken": $.cookie("csrftoken")},// 获取scrf_token
-                        success: function (data) {
-                            // 这里时服务器成功处理请求, 并且返回数据
-                            if (data == "False") {
-                                document.getElementById("CheckUsername").innerHTML = "<font color='red'>该用户名已被使用</font>";
-                            }
-                        },
-                    });
-                </script>
-
+                       style="width: 215px" onblur="usernameAjax()">
+                <span id="checkUsername" style="color: red"></span>
                 <br>
                 <input class="password" type="password" id="password1" name="password1" placeholder="请输入密码"
                        style="width: 215px">
@@ -230,54 +145,12 @@
                        style="width: 215px"
                        onblur="checkPwd()">
                 <span id="pwdSpan"></span>
-                {#                <font color = 'red' size="">×</font>#}
                 <br>
-                <label style="color: red">
-                    {{ msg }}
-                </label>
+                <label id="msgRegister" style="display: none">{{ registerMsg }}</label>
                 <br>
-                <button class="btn" type="submit">注册</button>
+                <button class="btn" id="btnSub" type="submit" disabled="disabled">注册</button>
             </form>
         </div>
     </div>
 
 </div>
-
-
-<script type="text/javascript">
-    $('.carousel').carousel({
-        interval: 2000  // 轮播时间
-    });
-    $(function () {
-        $('.tab-menu li').click(function () {
-            $(this).addClass('active').siblings().removeClass('active');
-//          $('.tab-top li').eq($(this).index()).addClass('active').siblings().removeClass('active');  tab按钮第二种写法
-            var index = $(this).index();
-            $(".tab-con div").eq(index).show().siblings().hide();
-        });
-    });
-
-    function checkPwd() {
-        var pwd1 = document.getElementById("password1").value;
-        var pwd2 = document.getElementById("passwordAgain").value;
-        var us = document.getElementById("username1").value;
-        console.log(pwd1);
-        var pwdSpan = document.getElementById("pwdSpan");
-        if (pwd1 != pwd2) {
-            pwdSpan.innerHTML = "<font color = 'red' font-size = 32px>×</font>";
-        } else {
-            pwdSpan.innerHTML = "<font color = 'green' font-size = 32px>√</font>";
-        }
-    }
-
-    function msg(){
-        var msg = {{ registerMsg|safe }};
-        console.log(msg);
-        if(msg != ""){
-            alert(msg);
-        }
-    }
-    msg();
-</script>
-</body>
-</html>
